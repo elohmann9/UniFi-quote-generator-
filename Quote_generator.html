@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
  <meta charset="UTF-8">
@@ -586,8 +586,9 @@
  <div class="header-text">
  <h1>Kerchunk Networks</h1>
  <p>Connecting Fire, Field &amp; Family</p>
+			<p style="font-size: 0.9rem; margin-top: 4px;">billing@kerchunknetworks.com &bull; 415-737-9223</p>
  </div>
- <div class="header-badge no-print">
+
  </div>
  </div>
  <!-- FORM SECTION -->
@@ -955,7 +956,7 @@
  <div class="preview-footer">
  <strong>Kerchunk Networks</strong><br>
  Connecting Fire, Field &amp; Family<br>
- <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="03666f6c6b6e626d6d43686671606b766d686d6677746c7168702d606c6e">[email&#160;protected]</a> · 415-328-4176 · kerchunknetworks.com
+				billing@kerchunknetworks.com &middot; 415-737-9223 &middot; kerchunknetworks.com
  </div>
  <div class="print-actions no-print">
  <button class="btn btn-primary" onclick="window.print()">🖨 Print / Save as PDF</button>
@@ -1196,29 +1197,35 @@
  function calcMarkup() {
  const cost = parseFloat(document.getElementById('costPrice').value) || 0;
  const margin = parseFloat(document.getElementById('marginPct').value) || 0;
- if (cost <= 0) { document.getElementById('markupRes
+ if (cost <= 0) {
+ document.getElementById('markupResult').textContent = 'Sell price: â€”';
+ return;
+ }
+ const sell = cost / (1 - (margin / 100));
+ document.getElementById('markupResult').textContent = `Sell price: $`;
+ }
 
-   
-       
-
-
-
-  
-     
-
-          
-          
-
-
-     
-        
-
-    
-        
-
+ function applyMarkup() {
+ const resultText = document.getElementById('markupResult').textContent;
+ if (!resultText.includes('$')) return;
+ const price = parseFloat(resultText.split('$')[1]);
  
-         
-   
-      
-    
-      
+ if (!isNaN(price)) {
+ const unitPriceInput = document.getElementById('unitPrice');
+ if (unitPriceInput) {
+ unitPriceInput.value = price.toFixed(2);
+ unitPriceInput.focus();
+ unitPriceInput.style.backgroundColor = '#e8f5e9';
+ setTimeout(() => unitPriceInput.style.backgroundColor = '', 500);
+ } else {
+ const customPriceInput = document.getElementById('customPrice');
+ if (customPriceInput && document.getElementById('customRow').classList.contains('visible')) {
+ customPriceInput.value = price.toFixed(2);
+ customPriceInput.focus();
+ }
+ }
+ }
+ }
+ </script>
+</body>
+</html>
